@@ -1,8 +1,16 @@
+"""
+Helper functions for cookies
+"""
+
 from http.cookies import SimpleCookie
+
 from aitm.aitm_config import TARGETS
 
 
 def parse_cookies(cookies: SimpleCookie) -> list:
+    """
+    Parses SimpleCookie to correct format for CookieEditor
+    """
     parsed_cookies = []
     for name, morsel in cookies.items():
         cookie = {"name": name, "value": morsel.value}

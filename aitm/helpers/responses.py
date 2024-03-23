@@ -1,9 +1,17 @@
-from mitmproxy.http import HTTPFlow
+"""
+Helper functions for request manipulations
+"""
+
 from http.cookies import SimpleCookie
-from aitm.aitm_config import TARGETS, CONTENT_TYPES, TARGET_SITES, CUSTOM_MODIFICATIONS
+
+from aitm.aitm_config import CONTENT_TYPES, CUSTOM_MODIFICATIONS, TARGET_SITES, TARGETS
+from mitmproxy.http import HTTPFlow
 
 
 def modify_header(flow: HTTPFlow, header: str) -> None:
+    """
+    Function to modify the headers of a response
+    """
     value = flow.response.headers.get(header)
     if value is not None:
         for target in TARGETS:
@@ -12,6 +20,9 @@ def modify_header(flow: HTTPFlow, header: str) -> None:
 
 
 def modify_content(flow: HTTPFlow) -> None:
+    """
+    Function to modify body of a response
+    """
     mime = flow.response.headers.get("Content-Type", "").split(";")[0]
     site = flow.server_conn.address[0]
     if mime in CONTENT_TYPES and site in TARGET_SITES:
@@ -28,6 +39,9 @@ def modify_content(flow: HTTPFlow) -> None:
 
 
 def modify_cookies(flow: HTTPFlow) -> None:
+    """
+    Function to modify set-cookies of a response
+    """
     set_cookies_str = flow.response.headers.get_all("set-cookie")
     set_cookies_str_modified: list[str] = []
 
@@ -40,6 +54,9 @@ def modify_cookies(flow: HTTPFlow) -> None:
 
 
 def save_cookies(flow: HTTPFlow, simple_cookie: SimpleCookie):
+    """
+    Function to load cookies into SimpleCookie
+    """
     set_cookies_str = flow.response.headers.get_all("set-cookie")
     if set_cookies_str:
         for cookie in set_cookies_str:
