@@ -3,6 +3,7 @@ Main script that start mitmproxy
 """
 
 import asyncio
+import logging
 
 from mitmproxy import options
 from mitmproxy.tools import dump
@@ -10,6 +11,8 @@ from mitmproxy.tools import dump
 from aitm.aitm_config import TARGETS
 from aitm.modifier_addon import ModifierAddon
 from aitm.upstream_addon import UpstreamAddon
+
+logging.root.setLevel("INFO")
 
 
 async def start_proxy(proxies: list[str]):

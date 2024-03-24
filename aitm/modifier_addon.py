@@ -3,12 +3,15 @@ Modifier Addon
 """
 
 import json
+import logging
 from http.cookies import SimpleCookie
 
 from mitmproxy.http import HTTPFlow
 
 from aitm.aitm_config import AUTH_URL, MFA_CLAIM
 from aitm.helpers import cookies, requests, responses
+
+logger = logging.getLogger(__name__)
 
 
 class ModifierAddon:
