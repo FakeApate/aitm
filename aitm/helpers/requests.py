@@ -6,7 +6,7 @@ from typing import Literal
 
 from mitmproxy.http import HTTPFlow
 
-from aitm.aitm_config import TARGET_PROXIES, TARGETS
+from aitm.aitm_config import config
 
 
 def modify_header(flow: HTTPFlow, header: str) -> None:
@@ -18,7 +18,7 @@ def modify_header(flow: HTTPFlow, header: str) -> None:
     else:
         value = flow.request.headers.get(header)
         if value is not None:
-            for target in TARGETS:
+            for target in config.targets:
                 value = value.replace(target["proxy"], target["origin"])
             flow.request.headers[header] = value
 
@@ -29,7 +29,7 @@ def modify_query(flow: HTTPFlow, query_key: str) -> None:
     """
     value = flow.request.query.get(query_key)
     if value is not None:
-        for target in TARGETS:
+        for target in config.targets:
             value = value.replace(target["proxy"], target["origin"])
         flow.request.query[query_key] = value
 
@@ -53,7 +53,7 @@ def search_targets(
     """
     Function to search trough the targets
     """
-    result = [target[_for] for target in TARGETS if target[_where] == _is]
+    result = [target[_for] for target in config.targets if target[_where] == _is]
     if len(result) == 1:
         return result[0]
     return None
@@ -69,7 +69,7 @@ def modify_host(flow: HTTPFlow) -> None:
         origin = None
         if port is not None:
             origin = search_targets("origin", "port", port)
-        elif host in TARGET_PROXIES:
+        elif host in config.target_proxies:
             origin = search_targets("origin", "proxy", host)
         if origin is not None:
             flow.request.headers["Host"] = origin
