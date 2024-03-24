@@ -61,7 +61,7 @@ def search_targets(
 
 def modify_host(flow: HTTPFlow) -> None:
     """
-    Function to modify the hos
+    Function to modify the host
     """
     host = flow.request.headers.get("Host")
     if host is not None:

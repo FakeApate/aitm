@@ -1,6 +1,7 @@
 """
 Upstream addon
 """
+import logging
 
 from mitmproxy.http import HTTPFlow
 
@@ -10,6 +11,8 @@ from aitm.aitm_config import (
     TARGET_PROXIES,
     TARGETS,
 )
+
+logger = logging.getLogger(__name__)
 
 
 def proxy_port(flow: HTTPFlow) -> int | None:

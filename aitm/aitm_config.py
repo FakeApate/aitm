@@ -44,7 +44,7 @@ MFA_CLAIM = '{"id_token":{"amr":{"essential":true,"values":["mfa"]}},"access_tok
 LOCAL_UPSTREAM_SCHEME: Literal[
     "http", "https", "http3", "tls", "dtls", "tcp", "udp", "dns", "quic"
 ] = "http"
-LOCAL_UPSTREAM_HOSTNAME = "local.fsoc.bid"
+LOCAL_UPSTREAM_HOSTNAME = "local.upstream.host"
 
 CUSTOM_MODIFICATIONS: list[Modification] = [
     {
