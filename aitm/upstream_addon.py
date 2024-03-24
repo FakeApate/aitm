@@ -5,12 +5,7 @@ import logging
 
 from mitmproxy.http import HTTPFlow
 
-from aitm.aitm_config import (
-    LOCAL_UPSTREAM_HOSTNAME,
-    LOCAL_UPSTREAM_SCHEME,
-    TARGET_PROXIES,
-    TARGETS,
-)
+from aitm.aitm_config import config
 
 logger = logging.getLogger(__name__)
 
@@ -19,7 +14,7 @@ def proxy_port(flow: HTTPFlow) -> int | None:
     """
     Function to get the correct port for the upstream
     """
-    for target in TARGETS:
+    for target in config.targets:
         if target["proxy"] == flow.request.host:
             return target["port"]
     return None
@@ -34,13 +29,13 @@ class UpstreamAddon:
         """
         Method which mitmproxy calls for each request
         """
-        if flow.request.host in TARGET_PROXIES:
+        if flow.request.host in config.target_proxies:
             port = proxy_port(flow)
             if port is not None:
-                flow.server_conn.via = LOCAL_UPSTREAM_SCHEME, (
-                    LOCAL_UPSTREAM_HOSTNAME,
+                flow.server_conn.via = config.local_upstream_scheme, (
+                    config.local_upstream_hostname,
                     port,
                 )
-                flow.request.host = LOCAL_UPSTREAM_HOSTNAME
+                flow.request.host = config.local_upstream_hostname
                 flow.request.port = port
-                flow.request.scheme = LOCAL_UPSTREAM_SCHEME
+                flow.request.scheme = config.local_upstream_scheme
