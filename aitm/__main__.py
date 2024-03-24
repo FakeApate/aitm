@@ -4,11 +4,12 @@ Main script that start mitmproxy
 
 import asyncio
 
+from mitmproxy import options
+from mitmproxy.tools import dump
+
 from aitm.aitm_config import TARGETS
 from aitm.modifier_addon import ModifierAddon
 from aitm.upstream_addon import UpstreamAddon
-from mitmproxy import options
-from mitmproxy.tools import dump
 
 
 async def start_proxy(proxies: list[str]):
@@ -32,7 +33,7 @@ async def start_proxy(proxies: list[str]):
 
     master.addons.add(UpstreamAddon())
     master.addons.add(ModifierAddon())
-    master.options.set("block_global=true")
+    master.options.set("block_global=false")
     master.options.set("connection_strategy=lazy")
     await master.run()
     return master

@@ -2,13 +2,14 @@
 Upstream addon
 """
 
+from mitmproxy.http import HTTPFlow
+
 from aitm.aitm_config import (
     LOCAL_UPSTREAM_HOSTNAME,
     LOCAL_UPSTREAM_SCHEME,
     TARGET_PROXIES,
     TARGETS,
 )
-from mitmproxy.http import HTTPFlow
 
 
 def proxy_port(flow: HTTPFlow) -> int | None:

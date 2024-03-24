@@ -4,8 +4,9 @@ Helper functions for request manipulations
 
 from typing import Literal
 
-from aitm.aitm_config import TARGET_PROXIES, TARGETS
 from mitmproxy.http import HTTPFlow
+
+from aitm.aitm_config import TARGET_PROXIES, TARGETS
 
 
 def modify_header(flow: HTTPFlow, header: str) -> None:

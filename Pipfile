@@ -1,0 +1,16 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+mitmproxy = "*"
+
+[dev-packages]
+black = "==22.3.0"
+flake8 = "*"
+isort = "*"
+mypy = "*"
+
+[requires]
+python_version = "3.11"
