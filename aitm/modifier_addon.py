@@ -5,9 +5,10 @@ Modifier Addon
 import json
 from http.cookies import SimpleCookie
 
+from mitmproxy.http import HTTPFlow
+
 from aitm.aitm_config import AUTH_URL, MFA_CLAIM
 from aitm.helpers import cookies, requests, responses
-from mitmproxy.http import HTTPFlow
 
 
 class ModifierAddon:
