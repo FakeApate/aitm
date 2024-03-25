@@ -11,6 +11,8 @@ black = "==22.3.0"
 flake8 = "*"
 isort = "*"
 mypy = "*"
+pytest = "*"
+pytest-cov = "*"
 
 [requires]
 python_version = "3.11"

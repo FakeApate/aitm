@@ -6,7 +6,7 @@
         {
             "label": "Format",
             "type": "shell",
-            "command": "isort aitm/; black aitm/; flake8 aitm/; mypy aitm/"
+            "command": "isort aitm/ test/; black aitm/ test/; flake8 aitm/ test/; mypy aitm/ test/; pytest; pytest --cov --cov-fail-under=90"
         }
     ]
 }
