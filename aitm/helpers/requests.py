@@ -2,8 +2,6 @@
 Helper functions for request manipulations
 """
 
-from typing import Literal
-
 from mitmproxy.http import HTTPFlow
 
 from aitm.aitm_config import config
@@ -45,20 +43,6 @@ def get_local_upstream_port(host: str) -> int | None:
     return None
 
 
-def search_targets(
-    _for: Literal["proxy", "origin", "port"],
-    _where: Literal["proxy", "origin", "port"],
-    _is: str | int,
-) -> str | int | None:
-    """
-    Function to search trough the targets
-    """
-    result = [target[_for] for target in config.targets if target[_where] == _is]
-    if len(result) == 1:
-        return result[0]
-    return None
-
-
 def modify_host(flow: HTTPFlow) -> None:
     """
     Function to modify the host
@@ -68,8 +52,22 @@ def modify_host(flow: HTTPFlow) -> None:
         port = get_local_upstream_port(host)
         origin = None
         if port is not None:
-            origin = search_targets("origin", "port", port)
+            origin = next(
+                (
+                    target["origin"]
+                    for target in config.targets
+                    if target["port"] == port
+                ),
+                None,
+            )
         elif host in config.target_proxies:
-            origin = search_targets("origin", "proxy", host)
+            origin = next(
+                (
+                    target["origin"]
+                    for target in config.targets
+                    if target["proxy"] == host
+                ),
+                None,
+            )
         if origin is not None:
             flow.request.headers["Host"] = origin
