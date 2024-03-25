@@ -1,7 +1,7 @@
 """
 Config script
 """
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from typing import Literal, TypeAlias, TypedDict
 
 
@@ -37,14 +37,14 @@ class Config:
     Config Dataclass
     """
 
-    _targets: list[Target] = []
-    content_types: list[str] = []
-    custom_modifications: list[Modification] = []
-    auth_url: list[str] = []
+    _targets: list[Target] = field(default_factory=list)
+    content_types: list[str] = field(default_factory=list)
+    custom_modifications: list[Modification] = field(default_factory=list)
+    auth_url: list[str] = field(default_factory=list)
     local_upstream_scheme: SchemeType = "http"
     local_upstream_hostname: str = ""
-    _target_sites: list[str] = []
-    _target_proxies: list[str] = []
+    _target_sites: list[str] = field(default_factory=list)
+    _target_proxies: list[str] = field(default_factory=list)
     mfa_claim: str = ""
 
     @property
