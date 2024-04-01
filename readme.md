@@ -1,4 +1,4 @@
-# Modifier-in-the-Middle
+# Modifier/Adversairy in the Middle
 
 To demonstrate how easily 2FA can be bypassed, I wrote this Addon for [mitmproxy](https://mitmproxy.org/).
 
