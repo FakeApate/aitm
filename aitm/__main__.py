@@ -3,12 +3,16 @@ Main script that start mitmproxy
 """
 
 import asyncio
+import logging
 
-from aitm.aitm_config import TARGETS
-from aitm.modifier_addon import ModifierAddon
-from aitm.upstream_addon import UpstreamAddon
 from mitmproxy import options
 from mitmproxy.tools import dump
+
+from aitm.aitm_config import config
+from aitm.modifier_addon import ModifierAddon
+from aitm.upstream_addon import UpstreamAddon
+
+logging.root.setLevel("INFO")
 
 
 async def start_proxy(proxies: list[str]):
@@ -32,7 +36,7 @@ async def start_proxy(proxies: list[str]):
 
     master.addons.add(UpstreamAddon())
     master.addons.add(ModifierAddon())
-    master.options.set("block_global=true")
+    master.options.set("block_global=false")
     master.options.set("connection_strategy=lazy")
     await master.run()
     return master
@@ -40,7 +44,8 @@ async def start_proxy(proxies: list[str]):
 
 if __name__ == "__main__":
     reverse_proxies = [
-        f"reverse:https://{target['origin']}@{target['port']}" for target in TARGETS
+        f"reverse:https://{target['origin']}@{target['port']}"
+        for target in config.targets
     ]
     reverse_proxies.append("upstream:https://dummy:8888")
     asyncio.run(start_proxy(reverse_proxies))

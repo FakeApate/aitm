@@ -4,7 +4,7 @@ Helper functions for cookies
 
 from http.cookies import SimpleCookie
 
-from aitm.aitm_config import TARGETS
+from aitm.aitm_config import config
 
 
 def parse_cookies(cookies: SimpleCookie) -> list:
@@ -16,7 +16,7 @@ def parse_cookies(cookies: SimpleCookie) -> list:
         cookie = {"name": name, "value": morsel.value}
         for k, v in morsel.items():
             if k == "domain":
-                for target in TARGETS:
+                for target in config.targets:
                     v = v.replace(target["proxy"], target["origin"])
             cookie[k] = v
         parsed_cookies.append(cookie)
