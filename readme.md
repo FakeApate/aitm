@@ -2,6 +2,8 @@
 
 To demonstrate how easily 2FA can be bypassed, I wrote this Addon for [mitmproxy](https://mitmproxy.org/).
 
+Moved project to my org: [rednet-sec-aitm](https://github.com/RedNoodlesOrg/rednet-sec-aitm)
+
 ## How to Run
 
 - install packages `pipenv install`.
